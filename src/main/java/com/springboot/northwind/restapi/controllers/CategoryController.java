@@ -3,6 +3,7 @@ package com.springboot.northwind.restapi.controllers;
 import com.springboot.northwind.restapi.entity.CategoryEntity;
 import com.springboot.northwind.restapi.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,10 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
-
+    @Value("${filepath}")
+    private String filePath;
+    @Value("${ApiKey}")
+    private String ApiKey;
     @GetMapping("/List")
     public ResponseEntity<List<CategoryEntity>> getAllCategories() {
         var result=categoryService.getAllCategories();
@@ -24,6 +28,8 @@ public class CategoryController {
 
     @GetMapping("GetById/{id}")
     public ResponseEntity<CategoryEntity> getCategoryById(@PathVariable Integer id) {
+        System.out.println("filePath"+filePath);
+        System.out.println("ApiKey"+ ApiKey);
         var result=categoryService.getCategoryById(id);
         return result
                 .map(ResponseEntity::ok)
