@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 //@RequestMapping("/api/categories")
 @RequestMapping("/api/v1/categories")
