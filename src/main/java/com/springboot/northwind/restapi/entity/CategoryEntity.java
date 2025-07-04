@@ -9,7 +9,7 @@ import java.sql.Blob;
 @Table(name="Categories")
 public class CategoryEntity implements Serializable {
 //compositvd entity
-    CategoryEntity(){
+public CategoryEntity(){
 
     }
 
