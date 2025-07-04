@@ -1,5 +1,6 @@
 package com.springboot.northwind.restapi.controllers;
 
+import com.springboot.northwind.restapi.controllers.v1.CategoryController;
 import com.springboot.northwind.restapi.entity.CategoryEntity;
 import com.springboot.northwind.restapi.services.CategoryService;
 import org.junit.jupiter.api.Test;

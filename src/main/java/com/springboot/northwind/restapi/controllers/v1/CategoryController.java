@@ -1,4 +1,4 @@
-package com.springboot.northwind.restapi.controllers;
+package com.springboot.northwind.restapi.controllers.v1;
 
 import com.springboot.northwind.restapi.entity.CategoryEntity;
 import com.springboot.northwind.restapi.services.CategoryService;
@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-@RestController
-@RequestMapping("/api/categories")
 
+@RestController
+//@RequestMapping("/api/categories")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
 
 
