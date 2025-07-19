@@ -19,6 +19,10 @@ public class FilterConfig {
         FilterRegistrationBean<JwtFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(jwtFilter);
         registrationBean.addUrlPatterns("/api/categories/*");
+//        registrationBean.addUrlPatterns(
+//        "/swagger-ui/*",
+//        "/v3/api-docs/*"
+//    );
         registrationBean.setOrder(1);
         return registrationBean;
     }
