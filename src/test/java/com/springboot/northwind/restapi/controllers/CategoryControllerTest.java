@@ -1,40 +1,59 @@
 package com.springboot.northwind.restapi.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.northwind.restapi.controllers.v1.CategoryController;
-import com.springboot.northwind.restapi.entity.CategoryEntity;
+import com.springboot.northwind.restapi.dto.CategoryDTO;
 import com.springboot.northwind.restapi.services.CategoryService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+
 import java.util.Arrays;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-public class CategoryControllerTest {
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-    @Mock
-    private CategoryService categoryService;
+@WebMvcTest(CategoryController.class)
+class CategoryControllerTest {
 
-    @InjectMocks
-    private CategoryController categoryController;
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private CategoryService service;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
-    public void testGetAllCategories() {
+    void getAllCategories_ShouldReturnListOfCategories() throws Exception {
+        // Arrange
+        CategoryDTO category1 = CategoryDTO.builder()
+                .categoryId(1)
+                .categoryName("Beverages")
+                .build();
 
-        CategoryEntity category = new CategoryEntity();
-        category.setCategoryID(1);
-        category.setCategoryName("Beverages");
-        List<CategoryEntity> categories = Arrays.asList(category);
-        when(categoryService.getAllCategories()).thenReturn(categories);
+        CategoryDTO category2 = CategoryDTO.builder()
+                .categoryId(2)
+                .categoryName("Condiments")
+                .build();
 
-        ResponseEntity<List<CategoryEntity>> response = categoryController.getAllCategories();
-        assertEquals(200, response.getStatusCode().value());
-        assertEquals(1, response.getBody().size());
-        assertEquals("Beverages", response.getBody().get(0).getCategoryName());
+        List<CategoryDTO> categoryList = Arrays.asList(category1, category2);
+
+        Mockito.when(service.getAllCategories()).thenReturn(categoryList);
+
+        // Act & Assert
+        mockMvc.perform(get("/api/categories"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].categoryId").value(1))
+                .andExpect(jsonPath("$[0].categoryName").value("Beverages"))
+                .andExpect(jsonPath("$[1].categoryId").value(2))
+                .andExpect(jsonPath("$[1].categoryName").value("Condiments"));
     }
 }

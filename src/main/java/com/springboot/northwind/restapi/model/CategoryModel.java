@@ -1,4 +1,4 @@
-package com.springboot.northwind.restapi.dto;
+package com.springboot.northwind.restapi.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryDTO {
+public class CategoryModel {
     private int categoryId;
     private String categoryName;
     private String description;
     private byte[] picture;
+
 }

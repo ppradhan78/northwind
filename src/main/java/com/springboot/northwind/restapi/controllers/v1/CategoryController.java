@@ -1,56 +1,48 @@
 package com.springboot.northwind.restapi.controllers.v1;
 
-import com.springboot.northwind.restapi.entity.CategoryEntity;
+import com.springboot.northwind.restapi.dto.CategoryDTO;
 import com.springboot.northwind.restapi.services.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+
 //@CrossOrigin(origins = "http://localhost:4200")
 @CrossOrigin
 @RestController
-//@RequestMapping("/api/categories")
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/api/categories")
+@RequiredArgsConstructor
 public class CategoryController {
 
+    private final CategoryService service;
 
-    @Autowired
-    private CategoryService categoryService;
-    @Value("${filepath}")
-    private String filePath;
-    @Value("${ApiKey}")
-    private String ApiKey;
-    @GetMapping("/List")
-    public ResponseEntity<List<CategoryEntity>> getAllCategories() {
-        var result=categoryService.getAllCategories();
-        return ResponseEntity.ok(result);
+    @GetMapping
+    public List<CategoryDTO> getAllCategories() {
+        return service.getAllCategories();
     }
 
-    @GetMapping("GetById/{id}")
-    public ResponseEntity<CategoryEntity> getCategoryById(@PathVariable Integer id) {
-        System.out.println("filePath"+filePath);
-        System.out.println("ApiKey"+ ApiKey);
-        var result=categoryService.getCategoryById(id);
-        return result
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getCategoryById(id));
     }
 
-    @PostMapping("Create")
-    public CategoryEntity createCategory(@RequestBody CategoryEntity category) {
-        return categoryService.createCategory(category);
+    @PostMapping
+    public ResponseEntity<String> createCategory(@RequestBody CategoryDTO dto) {
+        service.createCategory(dto);
+        return ResponseEntity.ok("Category created successfully");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryEntity> updateCategory(@PathVariable Integer id, @RequestBody CategoryEntity updatedCategory) {
-        return ResponseEntity.ok(categoryService.updateCategory( updatedCategory,id));
+    public ResponseEntity<String> updateCategory(@PathVariable Integer id, @RequestBody CategoryDTO dto) {
+        service.updateCategory(id, dto);
+        return ResponseEntity.ok("Category updated successfully");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Integer id) {
-        categoryService.deleteCategory(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteCategory(@PathVariable Integer id) {
+        service.deleteCategory(id);
+        return ResponseEntity.ok("Category deleted successfully");
     }
 }
+

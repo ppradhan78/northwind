@@ -1,15 +1,15 @@
-package com.springboot.northwind.restapi.dto;
+package com.springboot.northwind.restapi.entity;
+
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import lombok.Builder;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryDTO {
+public class Category {
     private int categoryId;
     private String categoryName;
     private String description;
