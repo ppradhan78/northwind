@@ -3,6 +3,7 @@ package com.springboot.northwind.restapi.controllers.v1;
 import com.springboot.northwind.restapi.dto.CategoryDTO;
 import com.springboot.northwind.restapi.services.CategoryService;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getCategoryById(id));
     }
