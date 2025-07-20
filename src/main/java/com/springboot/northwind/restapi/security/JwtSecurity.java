@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Map;
 
 @Component
 public class JwtSecurity {
@@ -22,9 +23,9 @@ private Key getSigningKey() {
 public String generateToken(String username, String email, String phoneNumber, String role) {
     return Jwts.builder()
             .setSubject(username)
-            .claim("Email", email)
-            .claim("PhoneNumber", phoneNumber)
-            .claim("role", role)
+            .addClaims(Map.of("role", role))
+            .addClaims(Map.of("Email", email))
+            .addClaims(Map.of("PhoneNumber", phoneNumber))
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) // 1 hour
             .signWith(getSigningKey(), SignatureAlgorithm.HS256)
@@ -44,7 +45,7 @@ public String extractEmail(String token) {
     }
 
     public String extractRole(String token) {
-        return extractAllClaims(token).get("Role", String.class);
+        return extractAllClaims(token).get("role", String.class);
     }
     public Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
