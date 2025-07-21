@@ -1,7 +1,8 @@
 package com.springboot.northwind.restapi.configuration;
 
-import com.springboot.northwind.restapi.Filter.JwtFilter;
-import com.springboot.northwind.restapi.security.JwtSecurity;
+import com.springboot.northwind.restapi.filter.JwtFilter;
+import com.springboot.northwind.restapi.security.JwtSecurityService;
+import com.springboot.northwind.restapi.security.JwtSecurityService;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class FilterConfig {
 
     @Bean
-    public JwtFilter jwtFilter(JwtSecurity jwtUtil) {
+    public JwtFilter jwtFilter(JwtSecurityService jwtUtil) {
         return new JwtFilter(jwtUtil);   // ✅ Manual bean creation
     }
 

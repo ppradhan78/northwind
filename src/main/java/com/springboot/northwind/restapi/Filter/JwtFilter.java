@@ -1,6 +1,7 @@
-package com.springboot.northwind.restapi.Filter;
+package com.springboot.northwind.restapi.filter;
 
-import com.springboot.northwind.restapi.security.JwtSecurity;
+import com.springboot.northwind.restapi.security.JwtSecurityService;
+import com.springboot.northwind.restapi.security.JwtSecurityService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,9 +17,9 @@ import java.util.List;
 
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final JwtSecurity jwtUtil;
+    private final JwtSecurityService jwtUtil;
 
-    public JwtFilter(JwtSecurity jwtUtil) {
+    public JwtFilter(JwtSecurityService jwtUtil) {
         this.jwtUtil = jwtUtil;
     }
     @Override

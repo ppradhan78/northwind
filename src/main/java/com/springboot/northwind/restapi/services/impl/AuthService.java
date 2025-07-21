@@ -3,7 +3,8 @@ package com.springboot.northwind.restapi.services.impl;
 
 import com.springboot.northwind.restapi.entity.User;
 import com.springboot.northwind.restapi.repository.UserRepository;
-import com.springboot.northwind.restapi.security.JwtSecurity;
+import com.springboot.northwind.restapi.security.JwtSecurityService;
+import com.springboot.northwind.restapi.security.JwtSecurityService;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final JwtSecurity jwtUtil;
+    private final JwtSecurityService jwtUtil;
 
     public String login(String username, String password) {
         User user = userRepository.findByUsername(username)

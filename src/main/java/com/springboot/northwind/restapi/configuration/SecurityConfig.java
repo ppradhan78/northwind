@@ -1,5 +1,5 @@
 package com.springboot.northwind.restapi.configuration;
-import com.springboot.northwind.restapi.Filter.JwtFilter;
+import com.springboot.northwind.restapi.filter.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
